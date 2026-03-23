@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Header</title>
+</head>
+<body>
+	<header th:fragment="header">
+		<div class="inner">
+			<div class="left">
+				<a th:href="@{/}" class="logo">EveryChallenge</a>
+			</div>
+			<div class="right">
+				<div class="menu">
+					<button type="button" class="menubtn">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+					<div class="menubox">
+						<a th:href="@{/challenge/insert}">insert</a>
+						<a th:href="@{/login}" sec:authorize="isAnonymous()">login</a>
+						<a th:href="@{/join}" sec:authorize="isAnonymous()">join</a>
+						<a th:href="@{/mypage}" sec:authorize="isAuthenticated()">mypage</a>
+						<form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display:inline;">
+							<button type="submit">logout</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(function(){
+				$(document).on("click", ".menubtn", function(){
+					$(".menubox").slideToggle(300);
+				});
+			});
+		</script>
+	</header>
+</body>
+</html>

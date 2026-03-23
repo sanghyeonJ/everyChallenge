@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyChallenge.mapper.ChallengeMapper">
+
+	<resultMap id="ChallengeResultMap" type="com.everyChallenge.domain.Challenge">
+		<id column="id" property="id"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="title" property="title"></result>
+		<result column="content" property="content"></result>
+		<result column="start_date" property="startDate"></result>
+		<result column="end_date" property="endDate"></result>
+		<result column="real_start_date" property="realStartDate"></result>
+		<result column="real_end_date" property="realEndDate"></result>
+		<result column="visibility" property="visibility"></result>
+		<result column="is_deleted" property="isDeleted"></result>
+		<result column="state" property="state"></result>
+		<result column="create_at" property="createAt"></result>
+		
+		<association property="user" resultMap="UserResultMap"></association>
+	</resultMap>
+	
+	<resultMap id="UserResultMap" type="com.everyChallenge.domain.User">
+		<id column="id" property="id"></id>
+		<result column="user_name" property="userName"></result>
+	</resultMap>
+	
+	<resultMap id="ChallengeDtoResultMap" type="com.everyChallenge.dto.response.ChallengeDto">
+	    <id column="id" property="id"/>
+	    <result column="title" property="title"/>
+	    <result column="content" property="content"/>
+	    <result column="start_date" property="startDate"/>
+	    <result column="end_date" property="endDate"/>
+	    <result column="real_start_date" property="realStartDate"/>
+	    <result column="real_end_date" property="realEndDate"/>
+	    <result column="visibility" property="visibility"/>
+	    <result column="is_deleted" property="isDeleted"/>
+	    <result column="state" property="state"/>
+	    <result column="create_at" property="createAt"/>
+	    <association property="user" resultMap="UserResultMapForDetail"/>
+	</resultMap>
+	
+	<resultMap id="UserResultMapForDetail" type="com.everyChallenge.domain.User">
+	    <id column="u_id" property="id"/>
+	    <result column="u_user_name" property="userName"/>
+	</resultMap>
+
+	<!-- 목록 조회 -->
+	<select id="selectChallengeVisibility" resultMap="ChallengeResultMap">
+		SELECT 
+			c.id,
+			c.title,
+			c.content,
+			c.start_date,
+			c.end_date,
+			c.real_start_date,
+			c.real_end_date,
+			c.state,
+			c.create_at,
+			u.user_name
+		FROM challenge c
+		INNER JOIN user u ON c.user_id = u.id
+		WHERE c.visibility = 'PUBLIC'
+		AND c.is_deleted = 0
+		AND u.is_deleted = 0
+		ORDER BY create_at DESC
+	</select>
+	
+	<!-- 생성 -->
+	<insert id="insertChallenge" parameterType="com.everyChallenge.dto.request.ChallengeInsertRequest">
+		INSERT INTO challenge (user_id, title, content, start_date, end_date, visibility)
+		VALUES (#{userId}, #{title}, #{content}, #{startDate}, #{endDate}, #{visibility})
+	</insert>
+	
+	<!-- 상세 -->
+	<select id="findById" resultMap="ChallengeDtoResultMap">
+		SELECT c.id, c.title, c.content, c.start_date, c.end_date,
+           c.real_start_date, c.real_end_date, c.visibility, c.is_deleted,
+           c.state, c.create_at,
+           u.id AS u_id, u.user_name AS u_user_name 
+		FROM challenge c 
+		LEFT JOIN user u ON c.user_id = u.id 
+		WHERE c.id = #{id}
+	</select>
+	
+	<!-- 삭제 soft delete -->
+	<update id="delete">
+		UPDATE challenge 
+		SET is_deleted = 1 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 수정 -->
+	<update id="update">
+		UPDATE challenge
+		SET title = #{title},
+			content = #{content},
+			start_date = #{startDate},
+			end_date = #{endDate},
+			visibility = #{visibility}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 시작 -->
+	<update id="challengeStart">
+		UPDATE challenge
+		SET state = 'IN_PROGRESS',
+			real_start_date = #{date}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 성공 -->
+	<update id="challengeSuccess">
+		UPDATE challenge
+		SET state = 'SUCCESS',
+			real_end_date = #{date}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 포기 -->
+	<update id="challengeGiveup">
+		UPDATE challenge
+		SET state = 'GIVE_UP',
+			real_end_date = #{date}
+		WHERE id = #{id}
+	</update>
+
+</mapper>

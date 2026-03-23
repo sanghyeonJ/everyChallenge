@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - Every Challenge">Every Challenge</title>
+    <!-- 공통 스타일: 항상 로드되도록 레이아웃 head에 둠 -->
+    <link href="/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <!-- 페이지별 head 내용(제목 등)은 여기만 채워짐 → Bootstrap은 유지됨 -->
+    <th:block layout:fragment="head"></th:block>
+</head>
+<body>
+	<div class="wrapper">
+	    <header th:replace="~{fragments/header :: header}"></header>
+	    <main>
+	        <div layout:fragment="content"></div>
+	    </main>
+    </div>
+    <script layout:fragment="script" th:if="false"></script>
+</body>
+</html>

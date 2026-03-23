@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+
+<body>
+	<div layout:fragment="content" class="detailPageWrap">
+		
+		<div class="detailPage">
+			<div class="detailInfo">
+				<h2 th:text="${challenge.title}" class="detailTitle"></h2>
+				<p th:text="${challenge.state}" class="state"
+					th:classappend="${challenge.state == 'READY' ? 'state-ready' : 
+					(challenge.state == 'IN_PROGRESS' ? 'state-progress' : 
+					(challenge.state == 'SUCCESS' ? 'state-success' : 
+					(challenge.state == 'GIVE_UP' ? 'state-giveup' : 'state-fail')))}"></p>
+			</div>
+			<div class="detailInfo2">
+				<p th:text="${challenge.user.userName}" class="detailUser"></p>
+				<span class="bar"></span>
+				<p class="detailDate"><span th:text="${challenge.startDate}"></span> ~ <span th:text="${challenge.endDate}"></span></p>			
+			</div>
+			<p th:text="${challenge.content}" class="detailContent"></p>
+			
+			<div class="replyWrap">
+				<h3 class="replyTitle">댓글</h3>
+				<div class="replyEmpty" th:if="${#lists.isEmpty(replyList)}">
+					댓글이 없습니다.
+				</div>
+				<div class="replyItem" th:each="reply, stat : ${replyList}">
+					<p th:text="${reply.user.userName}" class="user"></p>
+					<p th:text="${reply.content}" class="content"></p>
+					<form th:if="${currentUserId != null && reply != null && (reply.userId == currentUserId || isAdmin)}"
+						th:action="@{/reply/{id}/delete/{replyId}(id=${challenge.id}, replyId=${reply.id})}"
+						method="post">
+						<button type="submit">❌</button>
+					</form>
+				</div>
+				
+				<form th:action="@{/reply/{id}/insert(id=${challenge.id})}" th:object="${reply}" method="post">
+					<div class="replyWrite">
+						<textarea th:field="*{content}"></textarea>
+						<button type="submit">등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="btn_area">
+			<a th:href="@{/}" class="btn_list">list</a>
+			<a th:href="@{/challenge/{id}/update(id=${challenge.id})}" th:if="${canModify}" class="btn_edit">edit</a>
+			<form th:action="@{/challenge/{id}/delete(id=${challenge.id})}" method="post" th:if="${canModify}">
+				<button type="submit" class="btn_delete">delete</button>
+			</form>
+		</div>
+		
+		<div class="stateChange" th:if="${isOwner}">
+			<button type="button" id="challengeStart" class="btn_start" th:style="${state} == 'READY' ? 'display: inline-block;' : 'display: none;'" th:attr="data-id=${challenge.id}">시작</button>
+			<button type="button" id="challengeSuccess" class="btn_success" th:style="${state} == 'IN_PROGRESS' ? 'display: inline-block;' : 'display: none;'" th:attr="data-id=${challenge.id}">성공</button>
+			<button type="button" id="challengeGiveup" class="btn_giveup" th:style="${state} == 'IN_PROGRESS' ? 'display: inline-block;' : 'display: none;'" th:attr="data-id=${challenge.id}">포기</button>
+			<div id="challengeSuccessMsg" class="stateMsg msg_success" th:style="${state} == 'SUCCESS' ? 'display: flex;' : 'display: none;'">성공한 도전입니다.</div>
+			<div id="challengeGiveupMsg" class="stateMsg msg_giveup" th:style="${state} == 'GIVE_UP' ? 'display: flex;' : 'display: none;'">포기한 도전입니다.</div>
+			<div id="challengeFailMsg" class="stateMsg meg_fail" th:style="${state} == 'FAIL' ? 'display: flex;' : 'display: none;'">실패한 도전입니다.</div>
+		</div>
+		
+		<script>
+			$(function(){
+				$(document).on( "click", "#challengeStart", function(){
+					const id = $(this).data("id");
+					if(!id) return;
+					const $btn = $(this);
+					$.ajax({
+						url: "/api/challenge/" + id + "/start",
+						method: "POST",
+						contentType: "application/json"
+					})
+					.done(function(data){
+						if(data && data.success){
+							$btn.hide();
+							$("#challengeSuccess, #challengeGiveup").show();
+						} else{
+							alert("error");
+						}
+					});
+				});
+				
+				
+				$(document).on("click", "#challengeSuccess", function(){
+					const id = $(this).data("id");
+					if(!id) return;
+					const $btn = $(this);
+					$.ajax({
+						url: "/api/challenge/" + id + "/success",
+						method: "POST",
+						contentType: "application/json"
+					})
+					.done(function(data){
+						if(data && data.success){
+							$btn.hide();
+							$("#challengeGiveup").hide();
+							$("#challengeSuccessMsg").show();
+						}else{
+							alert("error");
+						}
+					})
+				});
+				
+				$(document).on("click", "#challengeGiveup", function(){
+					const id = $(this).data("id");
+					if(!id) return;
+					const $btn = $(this);
+					$.ajax({
+						url: "/api/challenge/" + id + "/giveup",
+						method: "POST",
+						contentType: "application/json"
+					})
+					.done(function(data){
+						if(data && data.success){
+							$btn.hide();
+							$("#challengeSuccess").hide();
+							$("#challengeGiveupMsg").show();
+						}else{
+							alert("error");
+						}
+					});
+				});
+			});
+		</script>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+
+<body>
+	<div layout:fragment="content">
+		
+		<div class="challenge_list">
+			<a th:each="challenge, stat : ${challenges}" th:href="@{/challenge/{id}(id=${challenge.id})}" th:block class="challenge">
+				<h2 th:text="${challenge.title}" class="title"></h2>
+				<p th:text="${challenge.content}" class="content text_cut"></p>
+				<p th:text="${challenge.user.userName}" class="user"></p>
+				<p th:text="${challenge.state}" class="state"
+					th:classappend="${challenge.state == 'READY' ? 'state-ready' : 
+					(challenge.state == 'IN_PROGRESS' ? 'state-progress' : 
+					(challenge.state == 'SUCCESS' ? 'state-success' : 
+					(challenge.state == 'GIVE_UP' ? 'state-giveup' : 'state-fail')))}"></p>
+			</a>
+		</div>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyChallenge.mapper.MypageMapper">
+
+	<resultMap id="challengeResultMap" type="com.everyChallenge.domain.Challenge">
+		<id column="id" property="id"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="title" property="title"></result>
+		<result column="content" property="content"></result>
+		<result column="start_date" property="startDate"></result>
+		<result column="end_date" property="endDate"></result>
+		<result column="real_start_date" property="realStartDate"></result>
+		<result column="real_end_date" property="realEndDate"></result>
+		<result column="visibility" property="visibility"></result>
+		<result column="is_deleted" property="isDeleted"></result>
+		<result column="state" property="state"></result>
+		<result column="create_at" property="createAt"></result>
+		<association property="user" ></association>
+	</resultMap>
+	<resultMap id="userResultMap" type="com.everyChallenge.domain.User">
+		<id column="id" property="id"></id>
+		<result column="user_name" property="userName"></result>
+	</resultMap>
+	
+	<select id="selectUserChallenge" resultMap="challengeResultMap">
+		SELECT 
+			c.id,
+			c.title,
+			c.content,
+			c.start_date,
+			c.end_date,
+			c.real_start_date,
+			c.real_end_date,
+			c.state
+		FROM challenge c
+		JOIN user u ON c.user_id = #{userId}
+		WHERE c.is_deleted = 0
+	</select>
+
+</mapper>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+
+<body>
+	<div layout:fragment="content">
+		
+		<div class="challengeInsert">
+			<form th:action="@{/challenge/insert}" th:object="${challenge}" method="post">
+				<div class="form_item">
+					<label>제목</label>
+					<input type="text" th:field="*{title}" required>
+				</div>
+				<div class="form_item">
+					<label>내용</label>
+					<textarea th:field="*{content}" required></textarea>
+				</div>
+				<div class="form_item">
+					<label>시작일</label>
+					<input type="date" th:field="*{startDate}" required>
+				</div>
+				<div class="form_item">
+					<label>종료일</label>
+					<input type="date" th:field="*{endDate}" required>
+				</div>
+				<div class="form_item">
+					<label>공개여부</label>
+					<div class="radio_box">
+						<input type="radio" th:field="*{visibility}" id="visibility_y" value="PUBLIC">
+						<label for="visibility_y">공개</label>
+						<input type="radio" th:field="*{visibility}" id="visibility_n" value="PRIVATE">
+						<label for="visibility_n">비공개</label>
+					</div>
+				</div>
+				<div class="form_btn">
+					<button type="submit" class="btn_submit">등록</button>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+</body>
+</html>

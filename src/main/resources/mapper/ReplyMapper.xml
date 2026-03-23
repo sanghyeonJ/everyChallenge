@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.everyChallenge.mapper.ReplyMapper">
+	<resultMap id="ReplyResultMap" type="com.everyChallenge.dto.response.ReplyDto">
+		<id column="id" property="id"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="challenge_id" property="challengeId"></result>
+		<result column="content" property="content"></result>
+		<result column="create_at" property="createAt"></result>
+		<association property="user" resultMap="UserResultMap"></association>
+	</resultMap>
+	
+	<resultMap id="UserResultMap" type="com.everyChallenge.domain.User">
+		<id column="id" property="id"></id>
+		<result column="user_name" property="userName"></result>
+	</resultMap>
+	
+	<select id="selectReply" resultMap="ReplyResultMap">
+		SELECT
+			r.id,
+			r.user_id,
+			r.challenge_id,
+			r.content,
+			r.create_at,
+			u.id,
+			u.user_name
+		FROM reply r
+		JOIN user u ON r.user_id = u.id
+		WHERE r.challenge_id = #{challengeId}
+		AND r.is_deleted = 0
+		AND u.is_deleted = 0
+	</select>
+	
+	<insert id="insertReply" parameterType="com.everyChallenge.dto.request.ReplyInsertRequest">
+		INSERT INTO reply (challenge_id, user_id, content)
+		VALUES (#{challengeId}, #{userId}, #{content})
+	</insert>
+	
+	<update id="deleteReply">
+		UPDATE reply 
+		SET is_deleted = 1
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

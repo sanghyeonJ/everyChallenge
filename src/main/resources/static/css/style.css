@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'YeogiOttaeJalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+*{ margin: 0; padding: 0; color: #333; box-sizing: border-box; font-family: 'Pretendard'; }
+button{ border: none; background: transparent; cursor: pointer; }
+a{ text-decoration: none; cursor: pointer; }
+input, textarea{ height: 36px; font-size: 16px; border: 1px solid #adadad; border-radius: 4px; padding: 2px 6px; border: 1px solid #adadad; border-radius: 4px; }
+textarea{ resize: none; }
+
+.text_cut{ display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; text-overflow: ellipsis; }
+
+body{ background-color: #f1f1f1; }
+.wrapper { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; min-height: 100vh; background: #fff; }
+main { flex: 1; height: 100%; padding: 0 20px 40px; display: flex; flex-direction: column; }
+.pageTitle{ margin: 48px 0 30px; text-align: center; }
+
+/* header */
+header .inner{ padding: 0 20px; margin: 20px 0; display: flex; align-items: center; justify-content: space-between; }
+header .logo{ font-size: 26px; font-family: 'YeogiOttaeJalnan'; color: #75a7ff; }
+header .menu{ position: relative; }
+header .menu .menubtn{ width: 42px; height: 42px; background-color: #f1f1f1; position: relative; border-radius: 8px; }
+header .menu .menubtn span{ width: 16px; height: 2px; position: absolute; background: #000; }
+header .menu .menubtn span:nth-child(1){ left: 50%; top: 35%;  transform: translate(-50%, -50%); }
+header .menu .menubtn span:nth-child(2){ left: 50%; top: 50%;  transform: translate(-50%, -50%); }
+header .menu .menubtn span:nth-child(3){ left: 50%; top: 65%;  transform: translate(-50%, -50%); }
+header .menu .menubox{ display: none; position: absolute; right: 0; top: 54px; border: 1px solid #ddd; background-color: #fff; padding: 14px 0; border-radius: 8px; box-shadow: 0px 2px 9px 2px rgba(0, 0, 0, 0.1); z-index: 1; background-color: #fff; }
+header .menu .menubox a,
+header .menu .menubox button{ width: 100px; height: 32px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 14px; }
+header .menu .menubox a:hover,
+header .menu .menubox button:hover{ background-color: #f1f1f1; }
+
+
+/* list */
+.challenge_list .challenge{ display: block; padding: 16px 20px; border: 1px solid #d3d3d3; border-radius: 20px; box-shadow: 0px 2px 9px 2px rgba(0, 0, 0, 0.1); position :relative; transition: all 0.2s; padding-right: 150px; }
+.challenge_list .challenge:hover{ transform: translateY(-6px); }
+.challenge_list .challenge + .challenge{ margin-top: 12px; }
+.challenge_list .challenge .title{ font-size: 20px; }
+.challenge_list .challenge .content{ font-size: 16px; color: #888; margin-top: 4px; }
+.challenge_list .challenge .user{ margin-top: 8px; }
+.challenge_list .challenge .state{ position: absolute; top: 16px; right: 20px; }
+.state{ display: inline-block; font-size: 14px; padding: 2px 12px; border-radius: 4px; }
+.state-ready{ border: 1px solid #DEE2E6; background-color: #F8F9FA; color: #6C757D; }
+.state-progress{ border: 1px solid #0D6EFD; background-color: #E7F1FF; color: #0D6EFD; }
+.state-success{ border: 1px solid #198754; background-color: #E9F7EF; color: #198754; }
+.state-giveup{ border: 1px solid #343A40; background-color: #F1F3F5; color: #343A40; }
+.state-fail{ border: 1px solid #DC3545; background-color: #FDEAEA; color: #DC3545; }
+
+
+/* join */
+.form_item{ max-width: 300px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.form_item + .form_item{ margin-top: 12px; }
+.form_item label{ font-size: 14px; }
+.form_item input[type="text"],
+.form_item input[type="password"]{ width: 100%; }
+.form_btn{ display: flex; align-items: center; justify-content: center; margin-top: 24px; }
+.form_btn .btn_submit{ width: 300px; height: 42px; border-radius: 4px; background: #0D6EFD; border: 1px solid #0D6EFD; color: #fff; }
+
+.message{ text-align: center; margin-bottom: 20px; }
+
+/* detail */
+.detailPageWrap{ flex: 1; height: 100%; display: flex; flex-direction: column; }
+.detailPage{ flex: 1; }
+.detailTitle{ font-size: 24px; }
+.detailInfo{ display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+.detailInfo .state{ flex: none; }
+.detailInfo2{ display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.detailInfo2 .bar{ display: block; flex: none; width: 1px; height: 16px; background: #c7c7c7; }
+.detailUser{ font-size: 15px; color: #888; }
+.detailDate{ display: flex; align-items: center; gap: 4px; font-size: 15px; color: #888; }
+.detailDate span{ font-size: 15px; color: #888; }
+.detailContent{ font-size: 16px; line-height: 1.4; }
+
+.replyWrap{ margin-top: 40px; }
+.replyTitle{ font-size: 20px; margin-bottom: 8px; }
+.replyEmpty{ width: 100%; height: 52px; background: #ededed; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 14px; color: #808080; }
+
+.replyItem{ display: flex; align-items: baseline; gap: 18px; }
+.replyItem + .replyItem{ margin-top: 12px; }
+.replyItem .user{ width: 80px; flex: none; font-size: 15px; color: #888; }
+.replyItem .content{ flex: 1; white-space: pre-wrap; word-break: break-all; }
+
+.replyWrite{ display: flex; gap: 8px; margin-top: 16px; }
+.replyWrite textarea{ width: 100%; height: 68px; font-size: 15px; }
+.replyWrite button{ width: 64px; flex: none; border-radius: 4px; background: #0D6EFD; border: 1px solid #0D6EFD; color: #fff; }
+
+.btn_area{ display: flex; align-items: center; gap: 8px; margin-top: 42px; }
+.btn_area a,
+.btn_area form,
+.btn_area button,
+.stateChange button{ width: 100%; font-size: 15px; text-align: center; }
+.btn_area a,
+.btn_area button,
+.stateChange button{ height: 42px; border-radius: 21px; font-size: 15px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+
+.btn_list{ background: #ededed; border: 2px solid #d2d2d2; }
+.btn_edit{ background: #333; color: #fff; }
+.btn_delete{ background: #ffe5e5; border: 2px solid #ff3a3a; color: #ff3a3a; }
+
+.stateChange{ display: flex; gap:8px; margin-top: 8px; }
+.btn_start{ background: #0D6EFD; border: 2px solid #0D6EFD; color: #fff; }
+.btn_success{ background: #E7F1FF; border: 2px solid #0D6EFD; color: #0D6EFD; }
+.btn_giveup{ background: #F1F3F5; border: 2px solid #343A40; color: #343A40; }
+
+.stateMsg{ width: 100%; height: 64px; display: flex; align-items: center; justify-content: center; margin-top: 16px; border-radius: 8px; }
+.msg_success{ background: #E9F7EF; color: #198754; }
+.msg_giveup{ background: #f1f3f5; color: #343a40; }
+.meg_fail{ background: #FDEAEA; color: #DC3545; }
+
+/* insert */
+.challengeInsert .form_item{ max-width: 100%; }
+.challengeInsert textarea{ width: 100%; height: 64px; }
+
+.radio_box{ display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.radio_box input[type="radio"]{ display: none; }
+.radio_box input[type="radio"] + label{ display: flex; align-items: center; justify-content: center; padding: 0 16px; height: 32px; border-radius: 16px; border: 2px solid #ddd; }
+.radio_box input[type="radio"]:checked + label{ background: #dae5ff; border-color: #9cb5ff; color: #305ad7; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
